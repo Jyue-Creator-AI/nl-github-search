@@ -1,0 +1,235 @@
+{
+  "metadata": {
+    "created": "2026-04-30",
+    "total_cases": 30,
+    "ground_truth_rules": {
+      "popular_good": "stars:>1000",
+      "recent_3mo": "pushed:>2026-01-31",
+      "recent_6mo": "pushed:>2025-11-02",
+      "this_year": "created:>2026-01-01",
+      "normalization": "qualifiers sorted alphabetically, joined with single space",
+      "brand_new_1mo": "created:>2026-04-01",
+      "this_week": "pushed:>2026-04-24"
+    },
+    "categories": {
+      "basic": 5,
+      "time": 5,
+      "multi": 8,
+      "ambiguous": 5,
+      "adversarial": 7
+    },
+    "eval_date": "2026-05-01"
+  },
+  "cases": [
+    {
+      "id": 1,
+      "category": "basic",
+      "input": "find Python repositories",
+      "ground_truth": "language:python",
+      "notes": "simplest case, single qualifier"
+    },
+    {
+      "id": 2,
+      "category": "basic",
+      "input": "repos with more than 1000 stars",
+      "ground_truth": "stars:>1000",
+      "notes": "explicit numeric threshold, no ambiguity"
+    },
+    {
+      "id": 3,
+      "category": "basic",
+      "input": "JavaScript repos about web development",
+      "ground_truth": "language:javascript topic:web-development",
+      "notes": "topic:web-development is the standard GitHub topic (not topic:web)"
+    },
+    {
+      "id": 4,
+      "category": "basic",
+      "input": "machine learning projects",
+      "ground_truth": "topic:machine-learning",
+      "notes": "topic mapping without language filter"
+    },
+    {
+      "id": 5,
+      "category": "basic",
+      "input": "Go repos with lots of forks",
+      "ground_truth": "forks:>100 language:go",
+      "notes": "lots of = >100 forks, consistent with popular threshold logic"
+    },
+    {
+      "id": 6,
+      "category": "time",
+      "input": "repos created after 2024",
+      "ground_truth": "created:>2024-01-01",
+      "notes": "explicit year, maps to Jan 1 of that year"
+    },
+    {
+      "id": 7,
+      "category": "time",
+      "input": "recently updated Python repos",
+      "ground_truth": "language:python pushed:>2026-01-31",
+      "notes": "recently = 90 days before eval date 2026-05-01"
+    },
+    {
+      "id": 8,
+      "category": "time",
+      "input": "repos pushed in the last 6 months",
+      "ground_truth": "pushed:>2025-11-02",
+      "notes": "6 months = 180 days before 2026-05-01"
+    },
+    {
+      "id": 9,
+      "category": "time",
+      "input": "new JavaScript frameworks created this year",
+      "ground_truth": "created:>2026-01-01 language:javascript topic:framework",
+      "notes": "this year = 2026-01-01, combines time + language + topic"
+    },
+    {
+      "id": 10,
+      "category": "time",
+      "input": "repos updated since 2025",
+      "ground_truth": "pushed:>2025-01-01",
+      "notes": "since 2025 = pushed after Jan 1 2025"
+    },
+    {
+      "id": 11,
+      "category": "multi",
+      "input": "popular Python machine learning repos updated recently",
+      "ground_truth": "language:python pushed:>2026-01-31 stars:>1000 topic:machine-learning",
+      "notes": "recently = 90 days before 2026-05-01"
+    },
+    {
+      "id": 12,
+      "category": "multi",
+      "input": "TypeScript repos with more than 500 stars created after 2023",
+      "ground_truth": "created:>2023-01-01 language:typescript stars:>500",
+      "notes": "explicit threshold 500, explicit year 2023"
+    },
+    {
+      "id": 13,
+      "category": "multi",
+      "input": "active open source JavaScript repos with over 10000 stars",
+      "ground_truth": "archived:false language:javascript pushed:>2025-11-02 stars:>10000",
+      "notes": "active = archived:false + pushed within 6 months"
+    },
+    {
+      "id": 14,
+      "category": "multi",
+      "input": "Rust repos about web development with more than 200 stars",
+      "ground_truth": "language:rust stars:>200 topic:web-development",
+      "notes": "topic:web-development is the standard GitHub topic"
+    },
+    {
+      "id": 15,
+      "category": "multi",
+      "input": "Python data science repos created in 2024 with more than 100 stars",
+      "ground_truth": "created:>2024-01-01 language:python stars:>100 topic:data-science",
+      "notes": "4 qualifiers, explicit year and threshold"
+    },
+    {
+      "id": 16,
+      "category": "multi",
+      "input": "popular Go networking libraries updated this year",
+      "ground_truth": "language:go pushed:>2026-01-01 stars:>1000 topic:networking",
+      "notes": "popular = stars:>1000, this year = 2026-01-01"
+    },
+    {
+      "id": 17,
+      "category": "multi",
+      "input": "active Python CLI tools with more than 1000 stars",
+      "ground_truth": "archived:false language:python pushed:>2025-11-02 stars:>1000 topic:cli",
+      "notes": "active = archived:false + pushed within 6 months; explicit stars:>1000"
+    },
+    {
+      "id": 18,
+      "category": "multi",
+      "input": "TypeScript React repos with more than 2000 stars updated recently",
+      "ground_truth": "language:typescript pushed:>2026-01-31 stars:>2000 topic:react",
+      "notes": "recently = 90 days before 2026-05-01"
+    },
+    {
+      "id": 19,
+      "category": "ambiguous",
+      "input": "good Python repos",
+      "ground_truth": "archived:false language:python stars:>1000",
+      "notes": "good = stars:>1000 + archived:false per ground truth rules; KNOWN: model may use different threshold"
+    },
+    {
+      "id": 20,
+      "category": "ambiguous",
+      "input": "trending repos this week",
+      "ground_truth": "pushed:>2026-04-24 stars:>1000",
+      "notes": "this week = 7 days before 2026-05-01 = 2026-04-24"
+    },
+    {
+      "id": 21,
+      "category": "ambiguous",
+      "input": "most popular machine learning framework",
+      "ground_truth": "stars:>1000 topic:machine-learning",
+      "notes": "most popular = stars:>1000; no language filter since ML spans multiple languages"
+    },
+    {
+      "id": 22,
+      "category": "ambiguous",
+      "input": "recently popular AI repos",
+      "ground_truth": "pushed:>2026-01-31 stars:>1000 topic:artificial-intelligence",
+      "notes": "recently = 90 days before 2026-05-01; AI = topic:artificial-intelligence"
+    },
+    {
+      "id": 23,
+      "category": "ambiguous",
+      "input": "useful developer tools",
+      "ground_truth": "archived:false stars:>1000 topic:developer-tools",
+      "notes": "useful = stars:>1000 + archived:false; KNOWN: model may use different topic"
+    },
+    {
+      "id": 24,
+      "category": "adversarial",
+      "input": "pythoon repos",
+      "ground_truth": "language:python",
+      "notes": "typo: pythoon → python; model should auto-correct"
+    },
+    {
+      "id": 25,
+      "category": "adversarial",
+      "input": "找最多星的機器學習專案",
+      "ground_truth": "stars:>1000 topic:machine-learning",
+      "notes": "Chinese input; most starred = stars:>1000 (consistent threshold)"
+    },
+    {
+      "id": 26,
+      "category": "adversarial",
+      "input": "brand new repos with 100000 stars",
+      "ground_truth": "created:>2026-04-01 stars:>100000",
+      "notes": "brand new = 30 days before 2026-05-01 = 2026-04-01"
+    },
+    {
+      "id": 27,
+      "category": "adversarial",
+      "input": "repos I can contribute to",
+      "ground_truth": "archived:false is:public stars:>100",
+      "notes": "IMPLICIT: contribute to = not archived + public + small enough to be approachable (>100 not >1000)"
+    },
+    {
+      "id": 28,
+      "category": "adversarial",
+      "input": "javascrpit framewrok",
+      "ground_truth": "language:javascript topic:framework",
+      "notes": "multiple typos; model should auto-correct both"
+    },
+    {
+      "id": 29,
+      "category": "adversarial",
+      "input": "最近更新的 Python 資料科學專案",
+      "ground_truth": "language:python pushed:>2026-01-31 topic:data-science",
+      "notes": "最近 = 90 days before 2026-05-01"
+    },
+    {
+      "id": 30,
+      "category": "adversarial",
+      "input": "repos for my next web project",
+      "ground_truth": "archived:false stars:>1000 topic:web-development",
+      "notes": "web project = topic:web-development; for my project implies quality = stars:>1000 archived:false"
+    }
+  ]
+}
