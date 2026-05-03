@@ -75,7 +75,7 @@ I tested 6 systematic failure categories rather than random adversarial inputs. 
 | Conflicting constraints | "brand new repos with 100000 stars" | LLM passes both constraints without flagging logical impossibility |
 | Implicit filters | "repos I can contribute to" | LLM hallucinated `good-first-issue:>0`, a non-existent qualifier → silent empty result |
 | Typos | "pythoon machine leraning repos" | LLM auto-corrects correctly — this category was robust |
-| Non-English | "找最多星的機器學習專案" | Translation correct, but temporal references used static 2024 dates |
+| Non-English | "找最多星的機器學習專案" | LLM added `language:zh`, treating query language as a programming language filter |
 | Temporal ambiguity | "recent trending repos" | `pushed:>2024-01-01` hardcoded — becomes stale as time passes |
 
 ### Harden — What I Fixed and Why
