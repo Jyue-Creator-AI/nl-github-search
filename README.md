@@ -63,7 +63,7 @@ python3 eval.py --prompt v5 --model claude
 
 ### Baseline
 
-The baseline CLI (`prompts/v1_system_prompt.txt`) accepts natural language input, calls Claude Haiku to generate a GitHub search query, executes it against the GitHub Search API, and returns formatted results.
+The baseline CLI (`search.py`) accepts natural language input, calls Claude Haiku to generate a GitHub search query, executes it against the GitHub Search API, and returns formatted results. The original baseline prompt is documented in `prompts/v1_system_prompt.txt`.
 
 ### Break It — Failure Case Taxonomy
 
@@ -90,7 +90,7 @@ Fix: Added exhaustive list of valid GitHub qualifiers to system prompt. LLM can 
 
 Root cause: LLM's training cutoff creates a static temporal reference point. "Recent" reliably maps to 2024 dates regardless of when the tool is run.
 
-Fix: Inject today's date and pre-calculated 3mo/6mo anchors at runtime. Date math uses `timedelta(days=90/180)` — not month arithmetic, which crashes on month-end dates (e.g. May 31 → Feb 31 does not exist).
+Fix: Inject today's date and pre-calculated 3mo/6mo anchors at runtime. Date math uses `timedelta(days=90)` or `timedelta(days=180)` — not month arithmetic, which crashes on month-end dates (e.g. May 31 → Feb 31 does not exist).
 
 **Fix 3: Empty result explanation**
 
@@ -129,7 +129,7 @@ Introduces a fourth model whose biases affect the score. Harder to reproduce, ha
 Ambiguous-intent cases (5 of 30) have multiple structurally valid answers. A model outputting `stars:>500` instead of `stars:>1000` for "popular repos" is judged incorrect even if reasonable. This is a documented design tradeoff — the alternative requires another model and can't be independently reproduced.
 
 **Threshold conventions (applied consistently across all 30 cases, eval date: 2026-05-01):**
-- `popular` / `good` = `stars:>1000`
+- `popular` = `stars:>1000`
 - `active` = `archived:false pushed:>2025-11-02` (both required)
 - `good` / `useful` = `stars:>1000 archived:false` (both required)
 - `recent` / `lately` = `pushed:>2026-01-31` (90 days)
