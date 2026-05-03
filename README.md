@@ -153,9 +153,9 @@ Full cases with ground truth: `data/test_cases.json`
 
 | Model | Type | Why capable of reaching threshold |
 |---|---|---|
-| Claude Haiku 4.5 | Closed-source | Strong instruction-following; primary tool in GoFreight's stated stack |
-| GPT-4o mini | Closed-source | Strongest closed-source competitor at low cost; reliable structured output |
-| Llama 3.3 70B (Groq) | Open-weight | Largest open-weight model accessible without local GPU; 3.3 generation shows strong instruction following |
+| Claude Haiku 4.5 | Closed-source | Strong instruction-following; referenced in GoFreight's stated stack via Claude Code |
+| GPT-4o mini | Closed-source | Strong low-cost closed-source alternative; reliable structured output |
+| Llama 3.3 70B (Groq) | Open-weight | Largest open-weight model available on Groq; 3.3 generation shows strong instruction following |
 
 All three were selected for their demonstrated ability to follow strict output-format constraints — critical for exact-match eval.
 
@@ -179,11 +179,11 @@ All three were selected for their demonstrated ability to follow strict output-f
 | Llama 3.3 70B | **96.7%** (29/30) | 5/5 | 5/5 | 8/8 | 5/5 | 6/7 |
 
 **Where each model failed:**
-- **Claude**: Case #8 (6-month date off by 1 day), #15 ("created in 2024" over-interpreted as range), #25 (中文 "最多星" added `language:zh`)
+- **Claude**: Case #8 (6-month date off by 1 day), #15 (added upper bound `created:<2025-01-01` — more precise than the ground truth convention), #25 (中文 "最多星" added `language:zh`)
 - **GPT-4o mini**: Case #8 (date calculation), #28 (typo correction dropped `language:javascript`)
 - **Llama**: Case #25 (中文 "最多星" → `stars:>10000` instead of `stars:>1000`)
 
-**Surprising finding:** Llama 3.3 70B outperformed both closed-source models. At v5, the prompt constraints were precise enough that model size and instruction-following quality mattered more than whether the model was open or closed weight.
+**Surprising finding:** Llama 3.3 70B outperformed both closed-source models on this eval. One caveat: the prompt was iterated primarily against Claude's failures, and the margin is a single case (29 vs 28 vs 27/30). A more controlled comparison would require prompt versions tuned independently for each model.
 
 ### Learnings
 
